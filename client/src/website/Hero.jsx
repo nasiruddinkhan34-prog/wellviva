@@ -1,6 +1,6 @@
 export default function Hero() {
   return (
-    <section className="bg-cover bg-center h-64 text-white" style={{ backgroundImage: "url('https://placehold.co/1600x400/4ade80/ffffff?text=Welcome+to+Wellviva')" }}>
+    <section className="bg-cover bg-center h-64 text-white" style={{ backgroundImage: "/Main_banner.jpeg" }}>
       <div className="bg-black bg-opacity-40 h-full flex items-center justify-center">
         <div className="text-center">
           <h2 className="text-4xl font-bold">Healthy Products, Happy Life</h2>
