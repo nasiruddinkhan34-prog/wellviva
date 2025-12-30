@@ -114,17 +114,13 @@ export const registerUser = async (req, res) => {
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
-  // Validation
   if (!email || !password) {
     return res.status(400).json({ message: "Email and password required" });
   }
 
   try {
-    /* --------------------------------------------------
-       1. Fetch active user
-    -------------------------------------------------- */
     const [users] = await db.query(
-      "SELECT * FROM users WHERE email = ? AND status = 'active'",
+      "SELECT * FROM users WHERE email = ?",
       [email]
     );
 
@@ -133,47 +129,38 @@ export const loginUser = async (req, res) => {
     }
 
     const user = users[0];
-
-    /* --------------------------------------------------
-       2. Compare password
-    -------------------------------------------------- */
     const isMatch = await bcrypt.compare(password, user.password_hash);
 
     if (!isMatch) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    /* --------------------------------------------------
-       3. Generate JWT
-    -------------------------------------------------- */
     const token = jwt.sign(
       {
         id: user.user_id,
         role: user.role,
         email: user.email,
+        firstName: user.first_name,
       },
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
 
-    /* --------------------------------------------------
-       4. Response
-    -------------------------------------------------- */
     res.json({
       token,
       user: {
         id: user.user_id,
         role: user.role,
         firstName: user.first_name,
-        lastName: user.last_name,
         email: user.email,
       },
     });
   } catch (error) {
-    console.error("Login Error:", error);
+    console.error("LOGIN ERROR:", error);
     res.status(500).json({ message: "Login failed" });
   }
 };
+
 
 
 /* ======================================================
