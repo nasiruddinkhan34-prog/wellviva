@@ -1,11 +1,9 @@
-// Import required packages
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+
 import db from "./config/db.js";
 
-
-// Import routes
 import authRoutes from "./routes/authRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import mlmRoutes from "./routes/mlmRoutes.js";
@@ -13,39 +11,21 @@ import productRoutes from "./routes/productRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 import paymentRoutes from "./routes/paymentRoutes.js";
 
-// Load environment variables
 dotenv.config();
-db.query("SELECT 1")
-  .then(() => console.log("✅ TiDB connected"))
-  .catch(err => {
-    console.error("❌ TiDB connection failed:", err.message);
-    process.exit(1);
-  });
 
-
-// Initialize app
 const app = express();
+
+/**
+ * 🔴 MUST use process.env.PORT on Render
+ */
 const PORT = process.env.PORT || 5000;
 
-// ---------------- MIDDLEWARE ----------------
-
-// Enable CORS
-app.use(cors({
-  origin: [
-    "http://localhost:5173",
-    "https://wellviva.vercel.app",
-    /\.vercel\.app$/
-  ],
-  credentials: true
-}));
-
-// PayU + form submissions
+/* -------------------- Middleware -------------------- */
+app.use(cors());
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// JSON body parsing
-app.use(express.json());
-
-// ---------------- ROUTES ----------------
+/* -------------------- Routes -------------------- */
 app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/mlm", mlmRoutes);
@@ -53,6 +33,12 @@ app.use("/api/products", productRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/payment", paymentRoutes);
 
-// ---------------- SERVER ----------------
-export default app;
+/* -------------------- Health Check (IMPORTANT) -------------------- */
+app.get("/", (req, res) => {
+  res.send("Wellviva API is running");
+});
 
+/* -------------------- Start Server -------------------- */
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+});
