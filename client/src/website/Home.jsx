@@ -30,19 +30,22 @@ const slides = [
     title: "Healthy Living Starts Here",
     subtitle:
       "Discover premium herbal, organic and wellness products trusted by thousands.",
-    bg: "from-teal-700 via-emerald-600 to-green-500",
+    image: "/Main_banner.jpg"
+
   },
   {
     title: "Pure. Natural. Effective.",
     subtitle:
       "Scientifically crafted Ayurvedic products for daily wellness.",
-    bg: "from-emerald-700 via-green-600 to-lime-500",
+    image: "/banner2.jpg"
+
   },
   {
     title: "Wellness for Every Family",
     subtitle:
       "Safe, certified, and powerful health solutions for all ages.",
-    bg: "from-green-700 via-teal-600 to-cyan-500",
+    image: "/Main_banner.jpg"
+
   },
 ];
 
@@ -64,50 +67,58 @@ export default function Home() {
   return (
     <>
       {/* ================= HERO SLIDER ================= */}
-      <section
-        className={`relative bg-gradient-to-br ${slide.bg} transition-all duration-700`}
+     <section className="relative h-[520px] md:h-[650px] overflow-hidden">
+  {/* Background Image */}
+  <img
+    src={slide.image}
+    alt={slide.title}
+    className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
+  />
+
+  {/* Dark Overlay */}
+  <div className="absolute inset-0 bg-black/50"></div>
+
+  {/* Content */}
+  <div className="relative max-w-7xl mx-auto px-6 py-32 text-center text-white">
+    <h1 className="text-5xl md:text-6xl font-extrabold leading-tight">
+      {slide.title}
+    </h1>
+
+    <p className="mt-5 text-lg text-white/90 max-w-2xl mx-auto">
+      {slide.subtitle}
+    </p>
+
+    <div className="mt-10 flex justify-center gap-6">
+      <Link
+        to="/shop"
+        className="bg-white text-teal-700 px-10 py-4 rounded-full font-semibold shadow-xl hover:scale-105 transition"
       >
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/white-diamond.png')] opacity-10"></div>
+        Shop Now
+      </Link>
 
-        <div className="relative max-w-7xl mx-auto px-6 py-32 text-center text-white">
-          <h1 className="text-5xl md:text-6xl font-extrabold leading-tight">
-            {slide.title}
-          </h1>
+      <Link
+        to="/about"
+        className="border border-white/70 px-10 py-4 rounded-full font-semibold hover:bg-white/10 transition"
+      >
+        Learn More
+      </Link>
+    </div>
 
-          <p className="mt-5 text-lg text-white/90 max-w-2xl mx-auto">
-            {slide.subtitle}
-          </p>
+    {/* Slider Dots */}
+    <div className="mt-12 flex justify-center gap-3">
+      {slides.map((_, i) => (
+        <button
+          key={i}
+          onClick={() => setIndex(i)}
+          className={`w-3 h-3 rounded-full transition ${
+            index === i ? "bg-white" : "bg-white/40"
+          }`}
+        />
+      ))}
+    </div>
+  </div>
+</section>
 
-          <div className="mt-10 flex justify-center gap-6">
-            <Link
-              to="/shop"
-              className="bg-white text-teal-700 px-10 py-4 rounded-full font-semibold shadow-xl hover:scale-105 transition"
-            >
-              Shop Now
-            </Link>
-
-            <Link
-              to="/about"
-              className="border border-white/70 px-10 py-4 rounded-full font-semibold hover:bg-white/10 transition"
-            >
-              Learn More
-            </Link>
-          </div>
-
-          {/* SLIDER DOTS */}
-          <div className="mt-12 flex justify-center gap-3">
-            {slides.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setIndex(i)}
-                className={`w-3 h-3 rounded-full transition ${
-                  index === i ? "bg-white" : "bg-white/40"
-                }`}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* ================= TRUST BADGES ================= */}
       <section className="bg-white py-12 border-b">
