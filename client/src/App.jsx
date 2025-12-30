@@ -17,6 +17,8 @@ import { CartProvider } from "./context/CartContext";
 import PaymentSuccess from "./payment/PaymentSuccess";
 import PaymentFailed from "./payment/PaymentFailed";
 import Register from "./auth/Register";
+import AdminLayout from "./admin/AdminLayout";
+import AdminRoute from "./AdminRoute";
 
 export default function App() {
   const [showCart, setShowCart] = useState(false);
@@ -38,6 +40,15 @@ export default function App() {
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/payment-success" element={<PaymentSuccess />} />
           <Route path="/payment-failed" element={<PaymentFailed />} />
+          <Route
+  path="/admin/*"
+  element={
+    <AdminRoute>
+      <AdminLayout />
+    </AdminRoute>
+  }
+/>
+
         </Routes>
 
         {showCart && <Cart onClose={() => setShowCart(false)} />}
