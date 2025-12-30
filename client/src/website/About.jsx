@@ -73,17 +73,17 @@ export default function About() {
             <div className="absolute -top-6 -left-6 w-40 h-40 bg-green-100 rounded-xl -z-10" />
             <div className="grid grid-cols-2 gap-4">
               <img
-                src="/about/about1.jpg"
+                src="/about/bottle.webp"
                 alt="Wellness"
                 className="rounded-xl shadow-lg object-cover h-48 w-full"
               />
               <img
-                src="/about/about2.jpg"
+                src="/about/healthy.jpg"
                 alt="Herbal"
                 className="rounded-xl shadow-lg object-cover h-48 w-full mt-10"
               />
               <img
-                src="/about/about3.jpg"
+                src="/about/ayurvedic.webp"
                 alt="Ayurveda"
                 className="rounded-xl shadow-lg object-cover h-48 w-full col-span-2"
               />
