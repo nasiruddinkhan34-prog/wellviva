@@ -30,7 +30,7 @@ const slides = [
     title: "Healthy Living Starts Here",
     subtitle:
       "Discover premium herbal, organic and wellness products trusted by thousands.",
-    image: "/hero.png"
+    image: "/main.png"
 
   },
   {
@@ -88,7 +88,7 @@ export default function Home() {
       {slide.subtitle}
     </p> */}
 
-    <div className="mt-10 flex justify-center gap-6">
+    <div className="mt-15 flex justify-center gap-6">
       <Link
         to="/shop"
         className="bg-white text-teal-700 px-10 py-4 rounded-full font-semibold shadow-xl hover:scale-105 transition"
