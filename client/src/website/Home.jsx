@@ -30,21 +30,21 @@ const slides = [
     title: "Healthy Living Starts Here",
     subtitle:
       "Discover premium herbal, organic and wellness products trusted by thousands.",
-    image: "/Main_banner.jpg"
+    image: "/Main_banner.jpeg"
 
   },
   {
     title: "Pure. Natural. Effective.",
     subtitle:
       "Scientifically crafted Ayurvedic products for daily wellness.",
-    image: "/banner2.jpg"
+    image: "/banner2.jpeg"
 
   },
   {
     title: "Wellness for Every Family",
     subtitle:
       "Safe, certified, and powerful health solutions for all ages.",
-    image: "/Main_banner.jpg"
+    image: "/Main_banner.jpeg"
 
   },
 ];
