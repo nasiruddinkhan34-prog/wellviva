@@ -38,12 +38,13 @@ export default function Home() {
           </p>
 
           <div className="mt-10 flex justify-center gap-6">
-            <a
+            <Link className="hover:text-teal-600" to="/shop"> Shop Now</Link>
+            {/* <a
               href="/shop"
               className="bg-white text-teal-700 px-10 py-4 rounded-full font-semibold shadow-xl hover:scale-105 transition"
             >
               Shop Now
-            </a>
+            </a> */}
             <a
               href="/about"
               className="border border-white/70 px-10 py-4 rounded-full font-semibold hover:bg-white/10 transition"
