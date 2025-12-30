@@ -102,9 +102,12 @@ export const registerUser = async (req, res) => {
       userId: result.insertId,
     });
   } catch (error) {
-    console.error("Register Error:", error);
-    res.status(500).json({ message: "Registration failed" });
-  }
+  console.error("REGISTER ERROR:", error);
+  res.status(500).json({
+    message: "Registration failed",
+    error: error.sqlMessage || error.message,
+  });
+}
 };
 
 /* ======================================================
