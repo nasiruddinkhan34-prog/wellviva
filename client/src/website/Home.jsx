@@ -72,7 +72,7 @@ export default function Home() {
   <img
     src={slide.image}
     alt={slide.title}
-    className="absolute inset-0 w-full h-full object-cover transition-opacity duration-700"
+    className="absolute inset-0 w-full h-full object-contain md:object-cover object-center transition-opacity duration-700"
   />
 
   {/* Dark Overlay */}
@@ -80,13 +80,13 @@ export default function Home() {
 
   {/* Content */}
   <div className="relative max-w-7xl mx-auto px-6 py-32 text-center text-white">
-    <h1 className="text-5xl md:text-6xl font-extrabold leading-tight">
+    {/* <h1 className="text-5xl md:text-6xl font-extrabold leading-tight">
       {slide.title}
     </h1>
 
     <p className="mt-5 text-lg text-white/90 max-w-2xl mx-auto">
       {slide.subtitle}
-    </p>
+    </p> */}
 
     <div className="mt-10 flex justify-center gap-6">
       <Link
