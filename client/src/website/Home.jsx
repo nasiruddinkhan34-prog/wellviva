@@ -30,7 +30,7 @@ const slides = [
     title: "Healthy Living Starts Here",
     subtitle:
       "Discover premium herbal, organic and wellness products trusted by thousands.",
-    image: "/hero.jpeg"
+    image: "/hero.png"
 
   },
   {
