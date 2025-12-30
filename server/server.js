@@ -13,6 +13,13 @@ import paymentRoutes from "./routes/paymentRoutes.js";
 
 // Load environment variables
 dotenv.config();
+db.query("SELECT 1")
+  .then(() => console.log("✅ TiDB connected"))
+  .catch(err => {
+    console.error("❌ TiDB connection failed:", err.message);
+    process.exit(1);
+  });
+
 
 // Initialize app
 const app = express();
