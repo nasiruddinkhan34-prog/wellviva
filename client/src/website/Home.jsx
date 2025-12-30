@@ -67,7 +67,7 @@ export default function Home() {
   return (
     <>
       {/* ================= HERO SLIDER ================= */}
-     <section className="relative h-[520px] md:h-[650px] bg-black overflow-hidden">
+     <section className="relative h-[320px] md:h-[350px] bg-black overflow-hidden">
   {/* Background Image */}
   <img
     src={slide.image}
