@@ -67,7 +67,7 @@ export default function Home() {
   return (
     <>
       {/* ================= HERO SLIDER ================= */}
-     <section className="relative h-[520px] md:h-[650px] overflow-hidden">
+     <section className="relative h-[520px] md:h-[650px] bg-black overflow-hidden">
   {/* Background Image */}
   <img
     src={slide.image}
@@ -76,11 +76,11 @@ export default function Home() {
   />
 
   {/* Dark Overlay */}
-  <div className="absolute inset-0 bg-black/50"></div>
+  <div className="absolute inset-0 bg-black/40"></div>
 
   {/* Content */}
   <div className="relative max-w-7xl mx-auto px-6 py-32 text-center text-white">
-    {/* <h1 className="text-5xl md:text-6xl font-extrabold leading-tight">
+    {/* <h1 className="text-4xl md:text-6xl font-extrabold leading-tight">
       {slide.title}
     </h1>
 
@@ -110,7 +110,7 @@ export default function Home() {
         <button
           key={i}
           onClick={() => setIndex(i)}
-          className={`w-3 h-3 rounded-full transition ${
+          className={`w-3 h-3 rounded-full ${
             index === i ? "bg-white" : "bg-white/40"
           }`}
         />
@@ -118,6 +118,7 @@ export default function Home() {
     </div>
   </div>
 </section>
+
 
 
       {/* ================= TRUST BADGES ================= */}
