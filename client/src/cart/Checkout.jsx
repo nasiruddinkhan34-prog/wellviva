@@ -1,53 +1,83 @@
 import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function Checkout() {
   const { cart, clearCart } = useCart();
   const navigate = useNavigate();
 
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  // 🔐 Auth check
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (!token) navigate("/login");
+    const storedUser = localStorage.getItem("user");
+
+    if (!token || !storedUser) {
+      navigate("/login");
+      return;
+    }
+
+    setUser(JSON.parse(storedUser));
   }, [navigate]);
 
   const total = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
 
-const placeOrder = async () => {
-  const res = await fetch(
-    `${import.meta.env.VITE_API_URL}/api/payment/initiate`,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        amount: total,
-        firstname: user.firstName,
-        email: user.email,
-        phone: "9999999999",
-        userId: user.id,
-      }),
+  const placeOrder = async () => {
+    if (!user) return alert("User not loaded");
+    if (!cart.length) return alert("Cart is empty");
+
+    setLoading(true);
+
+    try {
+      const res = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}/payment/initiate`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+          body: JSON.stringify({
+            amount: total,
+            firstname: user.firstName,
+            email: user.email,
+            phone: "9999999999",
+            userId: user.id,
+            productinfo: "Wellviva Order",
+          }),
+        }
+      );
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "Payment initiation failed");
+      }
+
+      // 🟢 Redirect to PayU
+      const form = document.createElement("form");
+      form.method = "POST";
+      form.action = data.payuUrl;
+
+      Object.entries(data.params).forEach(([key, value]) => {
+        const input = document.createElement("input");
+        input.type = "hidden";
+        input.name = key;
+        input.value = value;
+        form.appendChild(input);
+      });
+
+      document.body.appendChild(form);
+      form.submit();
+    } catch (err) {
+      alert(err.message);
+      console.error("Checkout error:", err);
+    } finally {
+      setLoading(false);
     }
-  );
-
-  const data = await res.json();
-
-  const form = document.createElement("form");
-  form.method = "POST";
-  form.action = data.payuUrl;
-
-  Object.entries(data.params).forEach(([k, v]) => {
-    const input = document.createElement("input");
-    input.type = "hidden";
-    input.name = k;
-    input.value = v;
-    form.appendChild(input);
-  });
-
-  document.body.appendChild(form);
-  form.submit();
-};
-
-
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 py-10 px-6">
@@ -71,7 +101,7 @@ const placeOrder = async () => {
           <h3 className="font-semibold mb-2">Payment Method</h3>
           <label className="flex items-center gap-2">
             <input type="radio" checked readOnly />
-            Cash on Delivery
+            Online Payment (PayU)
           </label>
         </div>
 
@@ -82,10 +112,11 @@ const placeOrder = async () => {
         </div>
 
         <button
+          disabled={loading}
           onClick={placeOrder}
-          className="w-full bg-teal-600 text-white py-3 rounded-lg hover:bg-teal-700"
+          className="w-full bg-teal-600 text-white py-3 rounded-lg hover:bg-teal-700 disabled:opacity-50"
         >
-          Place Order
+          {loading ? "Redirecting to PayU..." : "Place Order"}
         </button>
       </div>
     </div>
