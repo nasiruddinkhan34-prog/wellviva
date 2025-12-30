@@ -79,7 +79,7 @@ export const registerUser = async (req, res) => {
     const [result] = await db.query(
       `
       INSERT INTO users
-      (first_name, last_name, email, password_hash, role, upline_id, referral_code, rank, status)
+      (first_name, last_name, email, password_hash, role, upline_id, referral_code, user_rank, status)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'active')
       `,
       [
@@ -183,7 +183,7 @@ export const getProfile = async (req, res) => {
         email,
         role,
         referral_code,
-        rank,
+        user_rank,
         created_at
       FROM users
       WHERE user_id = ?
