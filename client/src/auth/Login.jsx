@@ -22,7 +22,7 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const res = await fetch("https://wellviva-4u9a.vercel.app/api/auth/login", {
+      const res = await fetch("https://wellviva-api.onrender.com/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
