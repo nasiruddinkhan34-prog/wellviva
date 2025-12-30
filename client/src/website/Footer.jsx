@@ -104,10 +104,10 @@ export default function Footer() {
 
         {/* PAYMENT ICONS */}
         <div className="mt-14 flex flex-wrap justify-center gap-6 opacity-80">
-          <img src="/payments/visa.png" className="h-8" />
-          <img src="/payments/mastercard.png" className="h-8" />
-          <img src="/payments/amex.png" className="h-8" />
-          <img src="/payments/rupay.png" className="h-8" />
+          <img src="/payments/visa.svg" className="h-8" />
+          <img src="/payments/master.png" className="h-8" />
+          <img src="/payments/paytm.png" className="h-8" />
+          <img src="/payments/rupay.jpg" className="h-8" />
           <img src="/payments/upi.png" className="h-8" />
         </div>
 
