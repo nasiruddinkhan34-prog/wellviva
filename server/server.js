@@ -21,7 +21,14 @@ const PORT = process.env.PORT || 5000;
 // ---------------- MIDDLEWARE ----------------
 
 // Enable CORS
-app.use(cors());
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "https://wellviva.vercel.app",
+    /\.vercel\.app$/
+  ],
+  credentials: true
+}));
 
 // PayU + form submissions
 app.use(express.urlencoded({ extended: true }));
@@ -39,4 +46,4 @@ app.use("/api/payment", paymentRoutes);
 
 // ---------------- SERVER ----------------
 export default app;
-  
+
