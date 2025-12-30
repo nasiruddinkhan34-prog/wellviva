@@ -67,12 +67,12 @@ export default function Home() {
   return (
     <>
       {/* ================= HERO SLIDER ================= */}
-     <section className="relative h-[320px] md:h-[450px] bg-black overflow-hidden">
+     <section className="relative h-[320px] md:h-[550px] bg-black overflow-hidden">
   {/* Background Image */}
   <img
     src={slide.image}
     alt={slide.title}
-    className="absolute inset-0 w-full h-full object-contain md:object-cover object-center transition-opacity duration-700"
+    className="absolute inset-0 object-contain md:object-cover object-center transition-opacity duration-700"
   />
 
   {/* Dark Overlay */}
