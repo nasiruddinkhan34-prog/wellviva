@@ -30,7 +30,7 @@ const slides = [
     title: "Healthy Living Starts Here",
     subtitle:
       "Discover premium herbal, organic and wellness products trusted by thousands.",
-    image: "/Main_banner.jpeg"
+    image: "/hero.jpeg"
 
   },
   {
@@ -67,7 +67,7 @@ export default function Home() {
   return (
     <>
       {/* ================= HERO SLIDER ================= */}
-     <section className="relative h-[320px] md:h-[350px] bg-black overflow-hidden">
+     <section className="relative h-[320px] md:h-[450px] bg-black overflow-hidden">
   {/* Background Image */}
   <img
     src={slide.image}
