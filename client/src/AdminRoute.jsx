@@ -1,15 +1,12 @@
-import { Routes, Route } from "react-router-dom";
-import Dashboard from "./admin/pages/Dashboard";
-// later:
-// import Products from "./pages/Products";
-// import Orders from "./pages/Orders";
+import { Navigate } from "react-router-dom";
 
-export default function AdminRoutes() {
-  return (
-    <Routes>
-      <Route path="dashboard" element={<Dashboard />} />
-      {/* <Route path="products" element={<Products />} /> */}
-      {/* <Route path="orders" element={<Orders />} /> */}
-    </Routes>
-  );
+export default function AdminRoute({ children }) {
+  const token = localStorage.getItem("token");
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  if (!token || user?.role !== "admin") {
+    return <Navigate to="/login" />;
+  }
+
+  return children;
 }
