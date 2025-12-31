@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import AdminHeader from "./AdminHeader";
 import AdminSidebar from "./AdminSidebar";
-import AdminRoutes from "./AdminRoute";
+import AdminRoutes from "../AdminRoute";
 
 export default function AdminLayout() {
   return (
