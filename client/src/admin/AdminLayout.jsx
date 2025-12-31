@@ -14,7 +14,7 @@ export default function AdminLayout() {
         <AdminHeader />
 
         <main className="p-6">
-          <Outlet />
+         
           <AdminRoutes />
         </main>
       </div>
