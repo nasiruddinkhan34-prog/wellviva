@@ -16,7 +16,7 @@ import PaymentSuccess from "./payment/PaymentSuccess";
 import PaymentFailed from "./payment/PaymentFailed";
 
 import AdminLayout from "./admin/AdminLayout";
-import AdminRoute from "./AdminRoute";
+import AdminRoutes from "./admin/AdminRoute";
 
 export default function App() {
   const [showCart, setShowCart] = useState(false);
