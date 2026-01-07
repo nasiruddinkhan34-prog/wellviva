@@ -17,6 +17,7 @@ import PaymentFailed from "./payment/PaymentFailed";
 
 import AdminLayout from "./admin/AdminLayout";
 import AdminRoute from "./AdminRoute";
+import ProductDetail from "./website/ProductDetail";
 
 export default function App() {
   const [showCart, setShowCart] = useState(false);
@@ -40,6 +41,8 @@ export default function App() {
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/payment-success" element={<PaymentSuccess />} />
             <Route path="/payment-failed" element={<PaymentFailed />} />
+            <Route path="/product/:id" element={<ProductDetail />} />
+            
           </Route>
 
           {/* 🔐 ADMIN ROUTES */}
