@@ -1,10 +1,13 @@
 import { useCart } from "../context/CartContext";
 
-export default function ProductCard({ product }) {
+export default function ProductCard({ product, onClick }) {
   const { addToCart } = useCart();
 
   return (
-    <div className="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition overflow-hidden">
+    <div
+      onClick={onClick}
+      className="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition overflow-hidden cursor-pointer"
+    >
       <div className="relative bg-gray-100 h-56 flex items-center justify-center">
         <span className="absolute top-3 left-3 bg-green-600 text-white text-xs px-3 py-1 rounded-full">
           Bestseller
@@ -31,8 +34,12 @@ export default function ProductCard({ product }) {
           </span>
         </div>
 
+        {/* IMPORTANT: Stop click bubbling */}
         <button
-          onClick={() => addToCart(product)}
+          onClick={(e) => {
+            e.stopPropagation();
+            addToCart(product);
+          }}
           className="mt-5 w-full bg-teal-600 text-white py-3 rounded-xl font-semibold hover:bg-teal-700 transition"
         >
           Add to Cart
