@@ -113,8 +113,7 @@ export default function Footer() {
 
         {/* COPYRIGHT */}
         <div className="mt-10 border-t border-gray-300 pt-6 text-center text-sm">
-          © 2025 Wellviva Organics. All Rights Reserved. Designed for wellness,
-          built on trust.
+          © 2025 Wellviva Organics. All Rights Reserved.
         </div>
       </div>
 

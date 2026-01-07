@@ -2,81 +2,162 @@ import { useCart } from "../context/CartContext";
 import { useNavigate } from "react-router-dom";
 
 export default function Cart() {
-  const { cart, updateQty, removeFromCart } = useCart();
+  const { cart, updateQty, removeFromCart, clearCart } = useCart();
   const navigate = useNavigate();
 
-  const total = cart.reduce((sum, i) => sum + i.price * i.qty, 0);
+  const subtotal = cart.reduce(
+    (sum, item) => sum + item.price * item.qty,
+    0
+  );
 
-  if (!cart.length) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold mb-4">Your cart is empty</h2>
-          <button
-            onClick={() => navigate("/")}
-            className="bg-teal-600 text-white px-6 py-3 rounded-lg"
-          >
-            Continue Shopping
-          </button>
-        </div>
-      </div>
-    );
-  }
+  const shipping = 0; // free shipping
+  const total = subtotal + shipping;
 
   return (
-    <div className="min-h-screen bg-gray-50 py-10 px-6">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-        {/* ITEMS */}
-        <div className="md:col-span-2 space-y-6">
-          {cart.map((item) => (
-            <div
-              key={item.id}
-              className="bg-white rounded-xl shadow p-5 flex justify-between items-center"
-            >
-              <div>
-                <h3 className="font-bold">{item.name}</h3>
-                <p className="text-gray-600">₹{item.price}</p>
+    <div className="min-h-screen bg-white py-10 px-6">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-10">
+        
+        {/* LEFT: CART TABLE */}
+        <div className="lg:col-span-2">
+          <table className="w-full text-left border-collapse">
+            <thead className="border-b">
+              <tr className="text-sm text-gray-600">
+                <th className="pb-4">Product</th>
+                <th>Price</th>
+                <th>SKU</th>
+                <th>Quantity</th>
+                <th className="text-right">Subtotal</th>
+              </tr>
+            </thead>
 
-                <div className="flex items-center gap-3 mt-2">
-                  <button
-                    onClick={() => updateQty(item.id, item.qty - 1)}
-                    className="px-3 py-1 border rounded"
-                  >
-                    −
-                  </button>
-                  <span>{item.qty}</span>
-                  <button
-                    onClick={() => updateQty(item.id, item.qty + 1)}
-                    className="px-3 py-1 border rounded"
-                  >
-                    +
-                  </button>
-                </div>
-              </div>
+            <tbody>
+              {cart.map((item) => (
+                <tr key={item.id} className="border-b">
+                  {/* PRODUCT */}
+                  <td className="py-6 flex gap-4 items-center">
+                    <img
+                      src={item.image || "/placeholder.png"}
+                      alt={item.name}
+                      className="w-16 h-16 object-contain border"
+                    />
+                    <div>
+                      <p className="font-semibold">{item.name}</p>
+                      <button
+                        onClick={() => removeFromCart(item.id)}
+                        className="text-sm text-gray-500 hover:text-red-500"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                  </td>
 
-              <button
-                onClick={() => removeFromCart(item.id)}
-                className="text-red-500 font-medium"
-              >
-                Remove
+                  {/* PRICE */}
+                  <td>₹{item.price.toFixed(2)}</td>
+
+                  {/* SKU */}
+                  <td>{item.sku || "—"}</td>
+
+                  {/* QTY */}
+                  <td>
+                    <div className="flex items-center border w-fit">
+                      <button
+                        onClick={() =>
+                          updateQty(item.id, Math.max(1, item.qty - 1))
+                        }
+                        className="px-3 py-1"
+                      >
+                        −
+                      </button>
+                      <span className="px-4">{item.qty}</span>
+                      <button
+                        onClick={() => updateQty(item.id, item.qty + 1)}
+                        className="px-3 py-1"
+                      >
+                        +
+                      </button>
+                    </div>
+                  </td>
+
+                  {/* SUBTOTAL */}
+                  <td className="text-right font-semibold">
+                    ₹{(item.price * item.qty).toFixed(2)}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+
+          {/* COUPON + CLEAR */}
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6 mt-8">
+            <div className="flex border">
+              <input
+                type="text"
+                placeholder="Coupon code"
+                className="px-4 py-2 outline-none"
+              />
+              <button className="bg-lime-600 text-white px-4">
+                OK
               </button>
             </div>
-          ))}
+
+            <button
+              onClick={clearCart}
+              className="flex items-center gap-2 bg-lime-600 text-white px-6 py-2 rounded-full"
+            >
+              🗑 Clear Shopping Cart
+            </button>
+          </div>
         </div>
 
-        {/* SUMMARY */}
-        <div className="bg-white rounded-xl shadow p-6 h-fit">
-          <h3 className="text-lg font-bold mb-4">Order Summary</h3>
-          <div className="flex justify-between mb-2">
-            <span>Total</span>
-            <span className="font-bold">₹{total}</span>
+        {/* RIGHT: CART TOTALS */}
+        <div className="border p-6">
+          <h3 className="text-lg font-semibold mb-4">Cart Totals</h3>
+
+          <div className="flex justify-between py-2 border-b">
+            <span>Subtotal</span>
+            <span>₹{subtotal.toFixed(2)}</span>
+          </div>
+
+          <div className="py-4 border-b">
+            <p className="font-semibold mb-2">Shipping</p>
+            <label className="flex items-center gap-2 text-sm">
+              <input type="radio" checked readOnly />
+              Free shipping
+            </label>
+            <label className="flex items-center gap-2 text-sm mt-1">
+              <input type="radio" disabled />
+              Flat rate: ₹83.00
+            </label>
+            <label className="flex items-center gap-2 text-sm mt-1">
+              <input type="radio" disabled />
+              Local pickup
+            </label>
+
+            <p className="text-sm text-gray-500 mt-3">
+              Shipping to <b>West Bengal</b>.{" "}
+              <span className="underline cursor-pointer">
+                Change address
+              </span>
+            </p>
+          </div>
+
+          <div className="flex justify-between py-4 text-lg font-bold">
+            <span>TOTAL</span>
+            <span>₹{total.toFixed(2)}</span>
           </div>
 
           <button
             onClick={() => navigate("/checkout")}
-            className="mt-6 w-full bg-teal-600 text-white py-3 rounded-lg hover:bg-teal-700"
+            className="w-full bg-orange-400 hover:bg-orange-500 text-white py-3 rounded-full font-semibold mb-4"
           >
-            Proceed to Checkout
+            Proceed To Checkout
+          </button>
+
+          <button
+            onClick={() => navigate("/shop")}
+            className="w-full bg-lime-600 hover:bg-lime-700 text-white py-3 rounded-full font-semibold"
+          >
+            Continue Shopping
           </button>
         </div>
       </div>

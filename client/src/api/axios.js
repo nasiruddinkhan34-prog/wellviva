@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://wellviva-4u9a.vercel.app/api",
+  baseURL: "https://wellviva-api.onrender.com/api",
 });
 
 api.interceptors.request.use((config) => {
