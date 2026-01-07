@@ -4,7 +4,28 @@ import ProductSection from "./ProductSection";
 
 /* ------------------ STATIC PRODUCT DATA ------------------ */
 const trendingProducts = [
-  { id: 1, name: "Herbal Tea", price: 299 },
+  { id: 1, name: "Herbal Tea", price: 299, "rating": 4.5,
+  "bv": 120,
+  "pv": 90,
+  "shortDescription": "Boost immunity and energy naturally.",
+  "description": "This herbal nutrition powder helps improve metabolism...", "specifications": {
+    "Weight": "500g",
+    "Ingredients": "Ashwagandha, Tulsi",
+    "Shelf Life": "18 months"
+  },
+  "reviews": [
+    {
+      "user": "Rahul",
+      "rating": 5,
+      "comment": "Excellent product!"
+    }
+  ],
+  "commission": {
+    "direct": 200,
+    "level": 350,
+    "repurchase": 150
+  }
+ },
   { id: 2, name: "Organic Honey", price: 499 },
   { id: 3, name: "Ashwagandha Capsules", price: 699 },
   { id: 4, name: "Moringa Powder", price: 399 },
