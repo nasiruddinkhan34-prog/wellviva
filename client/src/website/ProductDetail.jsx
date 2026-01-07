@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 /* -------------------------------------------------------------------------- */
 
 const ProductDetail = () => {
-  const { productId } = useParams();
+  const { id } = useParams();
 
   const [product, setProduct] = useState(null);
   const [activeImage, setActiveImage] = useState("");
@@ -20,7 +20,7 @@ const ProductDetail = () => {
     const fetchProduct = async () => {
       try {
         // Replace with real API later
-        const res = await fetch(`/api/products/${productId}`);
+        const res = await fetch(`/api/products/${id}`);
         const data = await res.json();
 
         setProduct(data);
@@ -33,7 +33,7 @@ const ProductDetail = () => {
     };
 
     fetchProduct();
-  }, [productId]);
+  }, [id]);
 
   /* -------------------------------------------------------------------------- */
   /*                               UI STATES                                    */
