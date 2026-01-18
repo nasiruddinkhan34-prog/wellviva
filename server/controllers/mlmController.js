@@ -57,21 +57,24 @@ export const getMlmDashboard = async (req, res) => {
       [userId]
     );
 console.log("🔥 NEW MLM CONTROLLER HIT");
-    res.json({
-      profile: {
-        name: `${user.first_name} ${user.last_name}`,
-        email: user.email,
-        referralCode: user.referral_code,
-        uplineId: user.upline_id,
-        rank: user.user_rank,
-        status: user.status,
-      },
-      wallet: walletRow.balance,
-      bv: {
-        left: bv?.left_bv || 0,
-        right: bv?.right_bv || 0,
-      },
-    });
+   res.json({
+  profile: {
+    name: user.name,
+    email: user.email,
+    referralCode: user.referral_code,
+    uplineId: user.upline_id,
+    rank: user.rank,
+    status: user.status,
+  },
+  wallet: walletBalance || 0,
+  bv: {
+    personal: personalBV || 0,
+    left: leftBV || 0,
+    right: rightBV || 0,
+    totalLeft: totalLeftBV || 0,
+    totalRight: totalRightBV || 0,
+  },
+});
   } catch (error) {
     
     console.error("MLM DASHBOARD ERROR:", error);
