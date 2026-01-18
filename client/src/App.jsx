@@ -18,6 +18,8 @@ import PaymentFailed from "./payment/PaymentFailed";
 import AdminLayout from "./admin/AdminLayout";
 import AdminRoute from "./AdminRoute";
 import ProductDetail from "./website/ProductDetail";
+import MlmDashboard from "./mlm/Dashboard";
+
 
 export default function App() {
   const [showCart, setShowCart] = useState(false);
@@ -42,6 +44,7 @@ export default function App() {
             <Route path="/payment-success" element={<PaymentSuccess />} />
             <Route path="/payment-failed" element={<PaymentFailed />} />
             <Route path="/product/:id" element={<ProductDetail />} />
+            <Route path="/mlm/dashboard" element={<MlmDashboard />} />
             
           </Route>
 

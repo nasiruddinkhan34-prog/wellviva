@@ -8,13 +8,22 @@ export const getMlmDashboard = async (req, res) => {
   try {
     const userId = req.user.id;
 
+    /* ---------- USER PROFILE ---------- */
     const [[user]] = await db.query(
-      `SELECT 
-        id, firstName, lastName, email, referral_code, sponsor_id, parent_id,
-        wallet, left_bv, right_bv, total_left_bv, total_right_bv,
-        rank, status
-       FROM users
-       WHERE id = ?`,
+      `
+      SELECT 
+        user_id,
+        first_name,
+        last_name,
+        email,
+        referral_code,
+        upline_id,
+        user_rank,
+        status,
+        role
+      FROM users
+      WHERE user_id = ?
+      `,
       [userId]
     );
 
@@ -22,26 +31,49 @@ export const getMlmDashboard = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
+    if (user.role !== "mlm_user") {
+      return res.status(403).json({ message: "Not an MLM user" });
+    }
+
+    /* ---------- WALLET BALANCE ---------- */
+    const [[walletRow]] = await db.query(
+      `
+      SELECT COALESCE(SUM(amount), 0) AS balance
+      FROM wallet_transactions
+      WHERE user_id = ?
+      `,
+      [userId]
+    );
+
+    /* ---------- BV (SAFE DEFAULTS) ---------- */
+    const [[bv]] = await db.query(
+      `
+      SELECT 
+        COALESCE(left_bv, 0) AS left_bv,
+        COALESCE(right_bv, 0) AS right_bv
+      FROM mlm_bv
+      WHERE user_id = ?
+      `,
+      [userId]
+    );
+
     res.json({
       profile: {
-        name: `${user.firstName} ${user.lastName}`,
+        name: `${user.first_name} ${user.last_name}`,
         email: user.email,
         referralCode: user.referral_code,
-        sponsorId: user.sponsor_id,
-        parentId: user.parent_id,
-        rank: user.rank,
+        uplineId: user.upline_id,
+        rank: user.user_rank,
         status: user.status,
       },
+      wallet: walletRow.balance,
       bv: {
-        left: user.left_bv,
-        right: user.right_bv,
-        totalLeft: user.total_left_bv,
-        totalRight: user.total_right_bv,
+        left: bv?.left_bv || 0,
+        right: bv?.right_bv || 0,
       },
-      wallet: user.wallet,
     });
   } catch (error) {
-    console.error(error);
+    console.error("MLM DASHBOARD ERROR:", error);
     res.status(500).json({ message: "Failed to load MLM dashboard" });
   }
 };
@@ -54,24 +86,31 @@ export const getWallet = async (req, res) => {
   try {
     const userId = req.user.id;
 
-    const [[wallet]] = await db.query(
-      "SELECT wallet FROM users WHERE id = ?",
+    const [[balance]] = await db.query(
+      `
+      SELECT COALESCE(SUM(amount), 0) AS balance
+      FROM wallet_transactions
+      WHERE user_id = ?
+      `,
       [userId]
     );
 
     const [transactions] = await db.query(
-      `SELECT amount, type, description, created_at
-       FROM wallet_transactions
-       WHERE user_id = ?
-       ORDER BY created_at DESC`,
+      `
+      SELECT amount, type, description, created_at
+      FROM wallet_transactions
+      WHERE user_id = ?
+      ORDER BY created_at DESC
+      `,
       [userId]
     );
 
     res.json({
-      balance: wallet.wallet,
+      balance: balance.balance,
       transactions,
     });
   } catch (error) {
+    console.error("WALLET ERROR:", error);
     res.status(500).json({ message: "Failed to load wallet" });
   }
 };
@@ -85,15 +124,18 @@ export const getIncomeReport = async (req, res) => {
     const userId = req.user.id;
 
     const [income] = await db.query(
-      `SELECT amount, type, created_at
-       FROM wallet_transactions
-       WHERE user_id = ? AND amount > 0
-       ORDER BY created_at DESC`,
+      `
+      SELECT amount, type, description, created_at
+      FROM wallet_transactions
+      WHERE user_id = ? AND amount > 0
+      ORDER BY created_at DESC
+      `,
       [userId]
     );
 
     res.json(income);
   } catch (error) {
+    console.error("INCOME ERROR:", error);
     res.status(500).json({ message: "Failed to load income report" });
   }
 };
@@ -103,36 +145,44 @@ export const getIncomeReport = async (req, res) => {
    POST /api/mlm/withdraw
 ====================================================== */
 export const requestWithdrawal = async (req, res) => {
-  const userId = req.user.id;
-  const { amount } = req.body;
-
-  if (!amount || amount <= 0) {
-    return res.status(400).json({ message: "Invalid withdrawal amount" });
-  }
-
   try {
-    const [[user]] = await db.query(
-      "SELECT wallet FROM users WHERE id = ?",
+    const userId = req.user.id;
+    const { amount } = req.body;
+
+    if (!amount || amount <= 0) {
+      return res.status(400).json({ message: "Invalid withdrawal amount" });
+    }
+
+    const [[wallet]] = await db.query(
+      `
+      SELECT COALESCE(SUM(amount), 0) AS balance
+      FROM wallet_transactions
+      WHERE user_id = ?
+      `,
       [userId]
     );
 
-    if (user.wallet < amount) {
+    if (wallet.balance < amount) {
       return res.status(400).json({ message: "Insufficient wallet balance" });
     }
 
     await db.query(
-      "INSERT INTO withdrawals (user_id, amount, status) VALUES (?, ?, 'pending')",
+      `
+      INSERT INTO withdrawals (user_id, amount, status)
+      VALUES (?, ?, 'pending')
+      `,
       [userId, amount]
     );
 
     res.status(201).json({ message: "Withdrawal request submitted" });
   } catch (error) {
+    console.error("WITHDRAW ERROR:", error);
     res.status(500).json({ message: "Failed to request withdrawal" });
   }
 };
 
 /* ======================================================
-   MLM GENEALOGY (LEVEL VIEW – SAFE & FAST)
+   MLM GENEALOGY (LEVEL VIEW)
    GET /api/mlm/genealogy
 ====================================================== */
 export const getGenealogy = async (req, res) => {
@@ -152,6 +202,7 @@ export const getGenealogy = async (req, res) => {
 
     res.json(levels);
   } catch (error) {
+    console.error("GENEALOGY ERROR:", error);
     res.status(500).json({ message: "Failed to load genealogy" });
   }
 };
