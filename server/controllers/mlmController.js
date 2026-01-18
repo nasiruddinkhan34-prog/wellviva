@@ -8,21 +8,24 @@ export const getMlmDashboard = async (req, res) => {
   try {
     const userId = req.user.id;
 
-    /* ---------- USER PROFILE ---------- */
     const [[user]] = await db.query(
       `
       SELECT 
-        user_id,
-        first_name,
-        last_name,
+        id,
+        firstName,
+        lastName,
         email,
         referral_code,
-        upline_id,
-        user_rank,
-        status,
-        role
+        sponsor_id,
+        wallet,
+        left_bv,
+        right_bv,
+        total_left_bv,
+        total_right_bv,
+        rank,
+        status
       FROM users
-      WHERE user_id = ?
+      WHERE id = ?
       `,
       [userId]
     );
@@ -31,56 +34,30 @@ export const getMlmDashboard = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    if (user.role !== "mlm_user") {
-      return res.status(403).json({ message: "Not an MLM user" });
-    }
-
-    /* ---------- WALLET BALANCE ---------- */
-    const [[walletRow]] = await db.query(
-      `
-      SELECT COALESCE(SUM(amount), 0) AS balance
-      FROM wallet_transactions
-      WHERE user_id = ?
-      `,
-      [userId]
-    );
-
-    /* ---------- BV (SAFE DEFAULTS) ---------- */
-    const [[bv]] = await db.query(
-      `
-      SELECT 
-        COALESCE(left_bv, 0) AS left_bv,
-        COALESCE(right_bv, 0) AS right_bv
-      FROM mlm_bv
-      WHERE user_id = ?
-      `,
-      [userId]
-    );
-console.log("🔥 NEW MLM CONTROLLER HIT");
-   res.json({
-  profile: {
-    name: user.name,
-    email: user.email,
-    referralCode: user.referral_code,
-    uplineId: user.upline_id,
-    rank: user.rank,
-    status: user.status,
-  },
-  wallet: walletBalance || 0,
-  bv: {
-    personal: personalBV || 0,
-    left: leftBV || 0,
-    right: rightBV || 0,
-    totalLeft: totalLeftBV || 0,
-    totalRight: totalRightBV || 0,
-  },
-});
+    res.json({
+      profile: {
+        name: `${user.firstName} ${user.lastName}`,
+        email: user.email,
+        referralCode: user.referral_code,
+        uplineId: user.sponsor_id,
+        rank: user.rank,
+        status: user.status,
+      },
+      wallet: Number(user.wallet || 0),
+      bv: {
+        personal: 0, // placeholder (can be calculated later)
+        left: Number(user.left_bv || 0),
+        right: Number(user.right_bv || 0),
+        totalLeft: Number(user.total_left_bv || 0),
+        totalRight: Number(user.total_right_bv || 0),
+      },
+    });
   } catch (error) {
-    
     console.error("MLM DASHBOARD ERROR:", error);
     res.status(500).json({ message: "Failed to load MLM dashboard" });
   }
 };
+
 
 /* ======================================================
    MLM WALLET
