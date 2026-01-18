@@ -53,7 +53,7 @@ export const registerUser = async (req, res) => {
       }
 
       uplineId = upline[0].user_id;
-      role = "mlm";
+      role = "mlm_user";
       rank = "Member";
 
       // Generate unique referral code
@@ -123,7 +123,7 @@ export const loginUser = async (req, res) => {
 
   try {
     const [users] = await db.query(
-      "SELECT * FROM users WHERE email = ?",
+      "SELECT * FROM users WHERE email = ? AND status = 'active'",
       [email]
     );
 
@@ -132,7 +132,11 @@ export const loginUser = async (req, res) => {
     }
 
     const user = users[0];
-    const isMatch = await bcrypt.compare(password, user.password_hash);
+
+    const isMatch = await bcrypt.compare(
+      password,
+      user.password_hash
+    );
 
     if (!isMatch) {
       return res.status(401).json({ message: "Invalid credentials" });
@@ -143,7 +147,6 @@ export const loginUser = async (req, res) => {
         id: user.user_id,
         role: user.role,
         email: user.email,
-        firstName: user.first_name,
       },
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
@@ -163,6 +166,7 @@ export const loginUser = async (req, res) => {
     res.status(500).json({ message: "Login failed" });
   }
 };
+
 
 
 
