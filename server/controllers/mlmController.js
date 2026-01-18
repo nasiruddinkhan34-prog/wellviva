@@ -56,7 +56,7 @@ export const getMlmDashboard = async (req, res) => {
       `,
       [userId]
     );
-
+console.log("🔥 NEW MLM CONTROLLER HIT");
     res.json({
       profile: {
         name: `${user.first_name} ${user.last_name}`,
@@ -73,6 +73,7 @@ export const getMlmDashboard = async (req, res) => {
       },
     });
   } catch (error) {
+    
     console.error("MLM DASHBOARD ERROR:", error);
     res.status(500).json({ message: "Failed to load MLM dashboard" });
   }
