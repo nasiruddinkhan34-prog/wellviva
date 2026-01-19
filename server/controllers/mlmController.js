@@ -18,7 +18,6 @@ export const getMlmDashboard = async (req, res) => {
         phone,
         referral_code,
         upline_id,
-        wallet,
         \`rank\`,
         \`status\`
       FROM users
