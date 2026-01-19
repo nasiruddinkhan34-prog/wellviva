@@ -11,7 +11,7 @@ export const getMlmDashboard = async (req, res) => {
     const [[user]] = await db.query(
       `
       SELECT
-        id,
+        user_id,
         firstName,
         lastName,
         email,
@@ -57,6 +57,7 @@ export const getMlmDashboard = async (req, res) => {
     res.status(500).json({ message: "Failed to load MLM dashboard" });
   }
 };
+
 
 
 /* ======================================================
