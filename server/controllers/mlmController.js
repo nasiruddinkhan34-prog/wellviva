@@ -10,7 +10,7 @@ export const getMlmDashboard = async (req, res) => {
 
     const [[user]] = await db.query(
       `
-      SELECT 
+      SELECT
         id,
         firstName,
         lastName,
@@ -43,13 +43,13 @@ export const getMlmDashboard = async (req, res) => {
         rank: user.rank,
         status: user.status,
       },
-      wallet: Number(user.wallet || 0),
+      wallet: Number(user.wallet ?? 0),
       bv: {
-        personal: 0,
-        left: Number(user.left_bv || 0),
-        right: Number(user.right_bv || 0),
-        totalLeft: Number(user.total_left_bv || 0),
-        totalRight: Number(user.total_right_bv || 0),
+        personal: 0, // can be calculated later
+        left: Number(user.left_bv ?? 0),
+        right: Number(user.right_bv ?? 0),
+        totalLeft: Number(user.total_left_bv ?? 0),
+        totalRight: Number(user.total_right_bv ?? 0),
       },
     });
   } catch (error) {
@@ -57,8 +57,6 @@ export const getMlmDashboard = async (req, res) => {
     res.status(500).json({ message: "Failed to load MLM dashboard" });
   }
 };
-
-
 
 /* ======================================================
    MLM WALLET
@@ -68,7 +66,7 @@ export const getWallet = async (req, res) => {
   try {
     const userId = req.user.id;
 
-    const [[balance]] = await db.query(
+    const [[balanceRow]] = await db.query(
       `
       SELECT COALESCE(SUM(amount), 0) AS balance
       FROM wallet_transactions
@@ -79,7 +77,11 @@ export const getWallet = async (req, res) => {
 
     const [transactions] = await db.query(
       `
-      SELECT amount, type, description, created_at
+      SELECT
+        amount,
+        type,
+        description,
+        created_at
       FROM wallet_transactions
       WHERE user_id = ?
       ORDER BY created_at DESC
@@ -88,7 +90,7 @@ export const getWallet = async (req, res) => {
     );
 
     res.json({
-      balance: balance.balance,
+      balance: Number(balanceRow.balance),
       transactions,
     });
   } catch (error) {
@@ -107,9 +109,14 @@ export const getIncomeReport = async (req, res) => {
 
     const [income] = await db.query(
       `
-      SELECT amount, type, description, created_at
+      SELECT
+        amount,
+        type,
+        description,
+        created_at
       FROM wallet_transactions
-      WHERE user_id = ? AND amount > 0
+      WHERE user_id = ?
+        AND amount > 0
       ORDER BY created_at DESC
       `,
       [userId]
@@ -131,11 +138,11 @@ export const requestWithdrawal = async (req, res) => {
     const userId = req.user.id;
     const { amount } = req.body;
 
-    if (!amount || amount <= 0) {
+    if (!amount || Number(amount) <= 0) {
       return res.status(400).json({ message: "Invalid withdrawal amount" });
     }
 
-    const [[wallet]] = await db.query(
+    const [[walletRow]] = await db.query(
       `
       SELECT COALESCE(SUM(amount), 0) AS balance
       FROM wallet_transactions
@@ -144,7 +151,7 @@ export const requestWithdrawal = async (req, res) => {
       [userId]
     );
 
-    if (wallet.balance < amount) {
+    if (Number(walletRow.balance) < Number(amount)) {
       return res.status(400).json({ message: "Insufficient wallet balance" });
     }
 
@@ -173,7 +180,9 @@ export const getGenealogy = async (req, res) => {
 
     const [levels] = await db.query(
       `
-      SELECT level, COUNT(*) AS members
+      SELECT
+        level,
+        COUNT(*) AS members
       FROM genealogy
       WHERE root_user_id = ?
       GROUP BY level
