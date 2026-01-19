@@ -15,13 +15,10 @@ export const getMlmDashboard = async (req, res) => {
         first_Name,
         last_Name,
         email,
+        phone,
         referral_code,
-        sponsor_id,
+        upline_id,
         wallet,
-        left_bv,
-        right_bv,
-        total_left_bv,
-        total_right_bv,
         \`rank\`,
         \`status\`
       FROM users
