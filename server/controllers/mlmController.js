@@ -25,7 +25,7 @@ export const getMlmDashboard = async (req, res) => {
         \`rank\`,
         \`status\`
       FROM users
-      WHERE id = ?
+      WHERE user_id = ?
       `,
       [userId]
     );
