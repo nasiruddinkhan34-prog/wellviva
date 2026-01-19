@@ -12,8 +12,8 @@ export const getMlmDashboard = async (req, res) => {
       `
       SELECT
         user_id,
-        firstName,
-        lastName,
+        first_Name,
+        last_Name,
         email,
         referral_code,
         sponsor_id,
