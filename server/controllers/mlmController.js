@@ -23,7 +23,7 @@ export const getMlmDashboard = async (req, res) => {
         total_left_bv,
         total_right_bv,
         rank,
-        status
+        \`status\`
       FROM users
       WHERE id = ?
       `,
@@ -45,7 +45,7 @@ export const getMlmDashboard = async (req, res) => {
       },
       wallet: Number(user.wallet || 0),
       bv: {
-        personal: 0, // placeholder (can be calculated later)
+        personal: 0,
         left: Number(user.left_bv || 0),
         right: Number(user.right_bv || 0),
         totalLeft: Number(user.total_left_bv || 0),
@@ -57,6 +57,7 @@ export const getMlmDashboard = async (req, res) => {
     res.status(500).json({ message: "Failed to load MLM dashboard" });
   }
 };
+
 
 
 /* ======================================================
