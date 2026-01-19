@@ -23,7 +23,7 @@ export const getMlmDashboard = async (req, res) => {
         total_left_bv,
         total_right_bv,
         rank,
-        \`status\`
+       status
       FROM users
       WHERE id = ?
       `,
