@@ -30,6 +30,8 @@ export const getMlmDashboard = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
+    console.log(res)
+
     res.json({
       profile: {
         name: `${user.firstName} ${user.lastName}`,
