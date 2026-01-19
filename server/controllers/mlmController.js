@@ -18,7 +18,7 @@ export const getMlmDashboard = async (req, res) => {
         phone,
         referral_code,
         upline_id,
-        \`rank\`,
+        \`user_rank\`,
         \`status\`
       FROM users
       WHERE user_id = ?
