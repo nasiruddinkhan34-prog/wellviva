@@ -34,7 +34,7 @@ export const getMlmDashboard = async (req, res) => {
 
     res.json({
       profile: {
-        name: `${user.firstName} ${user.lastName}`,
+        name: `${user.first_Name} ${user.last_Name}`,
         email: user.email,
         referralCode: user.referral_code,
         uplineId: user.sponsor_id,
