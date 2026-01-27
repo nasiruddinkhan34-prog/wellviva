@@ -13,20 +13,21 @@ export default function Downline() {
     sellerId: "all",
   });
 
-  const fetchData = async () => {
-    setLoading(true);
-    const res = await api.get("/mlm/genealogy/my-directs", {
-      params: {
-        position: "all",
-      },
-    });
-    setRows(res.data.records);
-    setLoading(false);
-  };
+ const fetchData = async () => {
+  setLoading(true);
+  const res = await api.get("/mlm/genealogy/my-directs", {
+    params: {
+      position: "all",
+    },
+  });
+  setRecords(res.data.records);
+  setLoading(false);
+};
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+useEffect(() => {
+  fetchData();
+}, []);
+
 
   return (
     <div className="space-y-6">
