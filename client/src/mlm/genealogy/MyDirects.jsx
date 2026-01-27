@@ -18,7 +18,6 @@ export default function Downline() {
     const res = await api.get("/mlm/genealogy/my-directs", {
       params: {
         position: "all",
-        sellerId: "all",
       },
     });
     setRows(res.data.records);
