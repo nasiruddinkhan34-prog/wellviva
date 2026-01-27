@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import api from "../api/axios";
+import api from "../../api/axios";
 
 export default function Downline() {
   const [records, setRecords] = useState([]);
@@ -15,19 +15,13 @@ export default function Downline() {
 
   const fetchData = async () => {
     setLoading(true);
-    try {
-      const res = await api.get("/mlm/downline", {
-        params: {
-          position: filters.position,
-          fromDate: filters.recordType === "between" ? filters.fromDate : null,
-          toDate: filters.recordType === "between" ? filters.toDate : null,
-          sellerId: filters.sellerId,
-        },
-      });
-      setRecords(res.data);
-    } catch (err) {
-      console.error(err);
-    }
+    const res = await api.get("/mlm/genealogy/my-directs", {
+      params: {
+        position: "all",
+        sellerId: "all",
+      },
+    });
+    setRows(res.data.records);
     setLoading(false);
   };
 

@@ -57,32 +57,29 @@ export const getMlmDashboard = async (req, res) => {
 };
 
 
-export const getDownline = async (req, res) => {
+export const getMyDirects = async (req, res) => {
   try {
     const userId = req.user.user_id;
 
     const {
       position = "all",
+      sellerId = "all",
       fromDate,
       toDate,
-      sellerId
     } = req.query;
 
-    let conditions = `WHERE sponsor_id = ?`;
+    let where = `WHERE upline_id = ?`;
     const params = [userId];
 
-    if (position !== "all") {
-      conditions += ` AND position = ?`;
-      params.push(position);
-    }
-
-    if (sellerId && sellerId !== "all") {
-      conditions += ` AND user_id = ?`;
+    // Seller ID filter
+    if (sellerId !== "all") {
+      where += ` AND user_id = ?`;
       params.push(sellerId);
     }
 
+    // Date filter
     if (fromDate && toDate) {
-      conditions += ` AND joining_date BETWEEN ? AND ?`;
+      where += ` AND DATE(created_at) BETWEEN ? AND ?`;
       params.push(fromDate, toDate);
     }
 
@@ -90,26 +87,26 @@ export const getDownline = async (req, res) => {
       `
       SELECT
         user_id,
-        first_name,
-        last_name,
-        sponsor_id,
-        parent_id,
-        plan,
-        joining_date,
-        confirmation_date,
-        mobile,
-        position,
+        CONCAT(first_name, ' ', last_name) AS name,
+        upline_id AS parent_id,
+        referral_code,
+        user_rank,
+        created_at,
+        phone,
         status
       FROM users
-      ${conditions}
-      ORDER BY joining_date DESC
+      ${where}
+      ORDER BY created_at DESC
       `,
       params
     );
 
-    res.json(rows);
+    res.json({
+      total: rows.length,
+      records: rows,
+    });
   } catch (err) {
-    console.error("DOWNLINE ERROR:", err);
+    console.error("MY DIRECTS ERROR:", err);
     res.status(500).json({ message: "Failed to load downline" });
   }
 };
