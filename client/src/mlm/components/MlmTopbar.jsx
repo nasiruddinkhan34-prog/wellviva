@@ -1,6 +1,6 @@
 import { Bell, Menu } from "lucide-react";
 
-export default function MlmTopbar({ onToggle, userName, balance }) {
+export default function MlmTopbar({ onToggle, user, balance }) {
   return (
    <header className="fixed top-0 left-64 right-0 h-16 bg-white border-b flex items-center px-6 z-40 " style={{justifyContent:'space-between'}}>
       
@@ -24,7 +24,7 @@ export default function MlmTopbar({ onToggle, userName, balance }) {
         <Bell size={20} className="text-gray-500 cursor-pointer" />
 
         <div className="text-right">
-          <p className="text-sm font-semibold">{userName}</p>
+          <p className="text-sm font-semibold">{user || "User"}</p>
           <p className="text-xs text-gray-400">User Dashboard</p>
         </div>
       </div>

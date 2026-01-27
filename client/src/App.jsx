@@ -19,6 +19,16 @@ import ProductDetail from "./website/ProductDetail";
 import MlmLayout from "./mlm/MlmLayout";
 import MlmDashboard from "./mlm/Dashboard";
 import EditProfile from "./mlm/profile/EditProfile";
+import Nominee from "./mlm/profile/Nominee";
+import BankDetails from "./mlm/profile/BankDetails";
+import KycDetails from "./mlm/profile/KycDetails";
+import ChangePassword from "./mlm/profile/ChangePassword";
+import ChangeAccountPassword from "./mlm/profile/ChangeAccountPassword";
+import IdCard from "./mlm/profile/IdCard";
+import WelcomeLetter from "./mlm/documents/WelcomeLetter";
+import TaxInvoice from "./mlm/documents/TaxInvoice";
+import FileDownloads from "./mlm/documents/FileDownloads";
+import MyDirects from "./mlm/genealogy/MyDirects";
 
 /* ADMIN */
 import AdminLayout from "./admin/AdminLayout";
@@ -50,6 +60,19 @@ export default function App() {
             <Route index element={<MlmDashboard />} />
             <Route path="dashboard" element={<MlmDashboard />} />
             <Route path="profile/edit" element={<EditProfile />} />
+            <Route path="profile/nominee" element={<Nominee />} />
+            <Route path="profile/bank" element={<BankDetails />} />
+            <Route path="profile/kyc" element={<KycDetails />} />
+            <Route path="profile/change-password" element={<ChangePassword />} />
+            <Route path="profile/change-account-password" element={<ChangeAccountPassword />}/>
+            <Route path="profile/id-card" element={<IdCard />} />
+            <Route path="documents/welcome-letter" element={<WelcomeLetter />} />
+            <Route path="documents/tax-invoice" element={<TaxInvoice />}/>
+           <Route path="documents/files" element={<FileDownloads />}/>
+           <Route path="genealogy/my-directs" element={<MyDirects />} />
+
+
+
           </Route>
 
           {/* 🔐 ADMIN ROUTES */}

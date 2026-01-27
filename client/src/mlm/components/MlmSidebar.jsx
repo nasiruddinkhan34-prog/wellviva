@@ -28,8 +28,8 @@ const menu = [
       { label: "Edit Nominee", path: "/mlm/profile/nominee" },
       { label: "Edit Bank Details", path: "/mlm/profile/bank" },
       { label: "Edit KYC Details", path: "/mlm/profile/kyc" },
-      { label: "Change Login Password", path: "/mlm/profile/login-password" },
-      { label: "Change Account Password", path: "/mlm/profile/account-password" },
+      { label: "Change Login Password", path: "/mlm/profile/change-password" },
+      { label: "Change Account Password", path: "/mlm/profile/change-account-password" },
       { label: "ID Card", path: "/mlm/profile/id-card" },
     ],
   },
@@ -41,7 +41,7 @@ const menu = [
       { label: "Business Plan", path: "/mlm/documents/business-plan" },
       { label: "Welcome Letter", path: "/mlm/documents/welcome-letter" },
       { label: "Tax Invoice", path: "/mlm/documents/tax-invoice" },
-      { label: "Download Files", path: "/mlm/documents/downloads" },
+      { label: "Download Files", path: "/mlm/documents/files" },
     ],
   },
 
@@ -49,7 +49,7 @@ const menu = [
     label: "Genealogy",
     icon: Network,
     children: [
-      { label: "My Directs", path: "/mlm/genealogy/directs" },
+      { label: "My Directs", path: "/mlm/genealogy/my-directs" },
       { label: "Left Downline", path: "/mlm/genealogy/left" },
       { label: "Right Downline", path: "/mlm/genealogy/right" },
       { label: "All Downline", path: "/mlm/genealogy/all" },

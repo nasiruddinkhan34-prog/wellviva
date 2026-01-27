@@ -57,6 +57,64 @@ export const getMlmDashboard = async (req, res) => {
 };
 
 
+export const getDownline = async (req, res) => {
+  try {
+    const userId = req.user.user_id;
+
+    const {
+      position = "all",
+      fromDate,
+      toDate,
+      sellerId
+    } = req.query;
+
+    let conditions = `WHERE sponsor_id = ?`;
+    const params = [userId];
+
+    if (position !== "all") {
+      conditions += ` AND position = ?`;
+      params.push(position);
+    }
+
+    if (sellerId && sellerId !== "all") {
+      conditions += ` AND user_id = ?`;
+      params.push(sellerId);
+    }
+
+    if (fromDate && toDate) {
+      conditions += ` AND joining_date BETWEEN ? AND ?`;
+      params.push(fromDate, toDate);
+    }
+
+    const [rows] = await db.query(
+      `
+      SELECT
+        user_id,
+        first_name,
+        last_name,
+        sponsor_id,
+        parent_id,
+        plan,
+        joining_date,
+        confirmation_date,
+        mobile,
+        position,
+        status
+      FROM users
+      ${conditions}
+      ORDER BY joining_date DESC
+      `,
+      params
+    );
+
+    res.json(rows);
+  } catch (err) {
+    console.error("DOWNLINE ERROR:", err);
+    res.status(500).json({ message: "Failed to load downline" });
+  }
+};
+
+
 
 /* ======================================================
    MLM WALLET
