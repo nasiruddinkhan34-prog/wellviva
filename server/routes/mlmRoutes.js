@@ -5,7 +5,7 @@ import {
   getIncomeReport,
   requestWithdrawal,
   getGenealogy,
-  getMyDirects
+  myDirects
 } from "../controllers/mlmController.js";
 
 import { protect } from "../middleware/authMiddleware.js";
@@ -17,7 +17,7 @@ router.get("/wallet", protect, getWallet);
 router.get("/income", protect, getIncomeReport);
 router.post("/withdraw", protect, requestWithdrawal);
 router.get("/genealogy", protect, getGenealogy);
-router.get("/genealogy/my-directs", protect, getMyDirects);
+router.get("/genealogy/my-directs", protect, myDirects);
 
 
 export default router;

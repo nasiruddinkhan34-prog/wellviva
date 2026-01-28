@@ -57,23 +57,20 @@ export const getMlmDashboard = async (req, res) => {
 };
 
 
-export const getMyDirects = async (req, res) => {
+export const myDirects = async (req, res) => {
   try {
-    const userId = req.user.user_id; // from JWT
+    const userId = req.user.user_id; // ✅ IMPORTANT
     const { position = "all" } = req.query;
 
     let sql = `
-      SELECT
+      SELECT 
         user_id,
         first_name,
         last_name,
-        email,
         phone,
-        upline_id,
         position,
-        user_rank,
         status,
-        created_at
+        created_at AS joining_date
       FROM users
       WHERE upline_id = ?
     `;
@@ -81,11 +78,11 @@ export const getMyDirects = async (req, res) => {
     const params = [userId];
 
     if (position !== "all") {
-      sql += ` AND position = ?`;
+      sql += " AND position = ?";
       params.push(position);
     }
 
-    sql += ` ORDER BY created_at DESC`;
+    sql += " ORDER BY created_at DESC";
 
     const [rows] = await db.query(sql, params);
 
@@ -93,11 +90,12 @@ export const getMyDirects = async (req, res) => {
       total: rows.length,
       records: rows,
     });
-  } catch (error) {
-    console.error("MY DIRECTS ERROR:", error);
-    res.status(500).json({ message: "Failed to load direct downline" });
+  } catch (err) {
+    console.error("MY DIRECTS ERROR:", err);
+    res.status(500).json({ message: "Failed to load directs" });
   }
 };
+
 
 
 
