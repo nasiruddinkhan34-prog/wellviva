@@ -121,6 +121,7 @@ useEffect(() => {
           <span>Direct Downline</span>
           <span>{records.length} Records</span>
         </div>
+        {console.log(records)}
 
         <div className="overflow-auto">
           <table className="w-full border">
@@ -138,7 +139,7 @@ useEffect(() => {
                 <th>Status</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody style={{textAlign:'center'}}>
               {records.map((r, i) => (
                 <tr key={r.user_id}>
                   <td>{i + 1}</td>
@@ -148,7 +149,7 @@ useEffect(() => {
                   <td>{r.sponsor_id}</td>
                   <td>{r.plan}</td>
                   <td>{r.joining_date}</td>
-                  <td>{r.mobile}</td>
+                  <td>{r.phone}</td>
                   <td>{r.position}</td>
                   <td>{r.status}</td>
                 </tr>
