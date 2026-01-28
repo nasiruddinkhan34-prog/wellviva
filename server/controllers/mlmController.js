@@ -65,7 +65,13 @@ export const myDirects = async (req, res) => {
 
     let sql = `
       SELECT 
-        *
+        user_id,
+        first_name,
+        last_name,
+        phone,
+        position,
+        status,
+        referral_code,
         created_at AS joining_date
       FROM users
       WHERE upline_id = ?
