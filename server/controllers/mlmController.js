@@ -59,7 +59,8 @@ export const getMlmDashboard = async (req, res) => {
 
 export const myDirects = async (req, res) => {
   try {
-    const userId = req.user.user_id; // ✅ IMPORTANT
+    const userId = req.user.id; // ✅ IMPORTANT
+    console.log(userId)
     const { position = "all" } = req.query;
 
     let sql = `
