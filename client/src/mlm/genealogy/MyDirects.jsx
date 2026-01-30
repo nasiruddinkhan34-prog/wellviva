@@ -146,8 +146,8 @@ useEffect(() => {
                   <td>{r.user_id}</td>
                   <td>{r.first_name} {r.last_name}</td>
                   <td>{r.parent_id}</td>
-                  <td>{r.sponsor_id}</td>
-                  <td>{r.plan}</td>
+                  <td>{r.referral_code}</td>
+                  <td>{r.user_rank}</td>
                   <td>{r.joining_date}</td>
                   <td>{r.phone}</td>
                   <td>{r.position}</td>

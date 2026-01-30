@@ -79,7 +79,7 @@ export default function MlmDashboard() {
             {stats.profile?.email || ""}
           </p>
         </div>
-
+{console.log(stats)}
         <div className="p-4 text-sm space-y-2">
           <p><b>Referral Code:</b> {stats.profile?.referralCode || "-"}</p>
           <p><b>Upline ID:</b> {stats.profile?.uplineId ?? "-"}</p>

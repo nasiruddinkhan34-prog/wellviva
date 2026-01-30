@@ -72,6 +72,7 @@ export const myDirects = async (req, res) => {
         position,
         status,
         referral_code,
+        user_rank,
         created_at AS joining_date
       FROM users
       WHERE upline_id = ?

@@ -1,0 +1,145 @@
+.product-card {
+  border: 1px solid #000;
+  text-align: center;
+  background: #fff;
+  overflow: hidden;
+}
+
+.image-wrap {
+  position: relative;
+  height: 280px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-wrap img {
+  max-height: 240px;
+  transition: 0.4s ease;
+}
+
+.price-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(185, 157, 18, 0.85);
+  color: #fff;
+  font-size: 36px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: 0.4s ease;
+}
+
+.product-card:hover .price-overlay {
+  opacity: 1;
+}
+
+.product-card:hover img {
+  transform: scale(1.05);
+}
+
+.product-title {
+  padding: 12px;
+  font-size: 16px;
+}
+
+.price-bar {
+  background: #475b6b;
+  color: #fff;
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-add {
+  margin: 12px auto 18px;
+  padding: 8px 20px;
+  background: linear-gradient(to right, #6b4f00, #0a7a00);
+  color: #fff;
+  border-radius: 4px;
+}
+
+.btn-search {
+  background: #ff6b4a;
+  color: #fff;
+  padding: 8px 16px;
+}
+
+.btn-cart {
+  background: #0a7a00;
+  color: #fff;
+  padding: 8px 16px;
+}
+
+
+.order-wrapper {
+  padding: 20px;
+  background: #fff;
+}
+
+.order-header {
+  background: linear-gradient(to right, #7a5a00, #0a8a00);
+  color: #fff;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+}
+
+.record-count {
+  background: #ffffff;
+  color: #555;
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.table-wrap {
+  margin-top: 16px;
+  overflow-x: auto;
+}
+
+.order-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.order-table thead {
+  background: #f8f8f8;
+}
+
+.order-table th,
+.order-table td {
+  border: 1px solid #eee;
+  padding: 10px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.order-table th {
+  font-weight: 600;
+}
+
+.btn-view {
+  background: #ff6b4a;
+  color: #fff;
+  border: none;
+  padding: 6px 10px;
+  margin-bottom: 4px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: block;
+}
+
+.btn-invoice {
+  background: linear-gradient(to right, #7a5a00, #0a8a00);
+  color: #fff;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+}

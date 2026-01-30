@@ -63,8 +63,8 @@ const menu = [
     icon: ShoppingCart,
     children: [
       { label: "Activation Order", path: "/mlm/shopping/activation" },
-      { label: "Upgrade Order", path: "/mlm/shopping/upgrade" },
-      { label: "Repurchase Order", path: "/mlm/shopping/repurchase" },
+      { label: "Upgrade Order", path: "/mlm/shopping/activation" },
+      { label: "Repurchase Order", path: "/mlm/shopping/activation" },
       { label: "Order History", path: "/mlm/shopping/history" },
     ],
   },

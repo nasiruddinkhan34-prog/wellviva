@@ -29,10 +29,18 @@ import WelcomeLetter from "./mlm/documents/WelcomeLetter";
 import TaxInvoice from "./mlm/documents/TaxInvoice";
 import FileDownloads from "./mlm/documents/FileDownloads";
 import MyDirects from "./mlm/genealogy/MyDirects";
+import JoinMember from "./mlm/genealogy/JoinMember";
+import ViewCart from "./mlm/shopping/ViewCart";
+import ActivationOrder from "./mlm/shopping/ActivationOrder";
 
 /* ADMIN */
 import AdminLayout from "./admin/AdminLayout";
 import AdminRoute from "./AdminRoute";
+import OrderHistory from "./mlm/shopping/OrderHistory";
+import ProductWalletRequest from "./mlm/productWallet/ProductWalletRequest";
+import ProductWalletTransfer from "./mlm/productWallet/ProductWalletTransfer";
+import ProductWalletTransactions from "./mlm/productWallet/ProductWalletTransactions";
+
 
 export default function App() {
   return (
@@ -70,6 +78,15 @@ export default function App() {
             <Route path="documents/tax-invoice" element={<TaxInvoice />}/>
            <Route path="documents/files" element={<FileDownloads />}/>
            <Route path="genealogy/my-directs" element={<MyDirects />} />
+           <Route path="genealogy/join" element={<JoinMember />} />
+           <Route path="/mlm/shopping/activation" element={<ActivationOrder />} />
+           <Route path="/mlm/shopping/cart" element={<ViewCart />} />
+           <Route path="/mlm/shopping/history" element={<OrderHistory />} />
+           <Route path="/mlm/wallet/request" element={<ProductWalletRequest />} />
+           <Route path="/mlm/wallet/transfer" element={<ProductWalletTransfer />} />
+           <Route path="/mlm/wallet/transactions" element={<ProductWalletTransactions />} />
+
+
 
 
 

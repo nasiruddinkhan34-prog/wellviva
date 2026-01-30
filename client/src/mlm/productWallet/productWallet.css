@@ -1,0 +1,236 @@
+/* ===============================
+   GLOBAL
+================================ */
+.wallet-wrapper {
+  padding: 20px;
+  background: #f7f9fc;
+}
+
+.wallet-card {
+  background: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+/* ===============================
+   HEADERS (GRADIENT)
+================================ */
+.wallet-header {
+  background: linear-gradient(to right, #7a5a00, #0a8a00);
+  color: #fff;
+  padding: 12px 16px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 4px 4px 0 0;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.record-badge {
+  background: #fff;
+  color: #0a8a00;
+  font-size: 13px;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+/* ===============================
+   SEARCH CRITERIA
+================================ */
+.wallet-form {
+  padding: 16px;
+}
+
+.radio-group {
+  display: flex;
+  gap: 25px;
+  margin-bottom: 15px;
+}
+
+.radio-group label {
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.radio-group input {
+  margin-right: 6px;
+}
+
+/* ===============================
+   INPUTS
+================================ */
+.wallet-form input,
+.wallet-form select,
+.wallet-form textarea {
+  width: 100%;
+  padding: 9px 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.wallet-form textarea {
+  resize: none;
+  min-height: 70px;
+}
+
+.wallet-form input[disabled],
+.wallet-form textarea[disabled] {
+  background: #f1f1f1;
+}
+
+/* ===============================
+   BUTTONS
+================================ */
+.btn-submit {
+  background: linear-gradient(to right, #7a5a00, #0a8a00);
+  color: #fff;
+  border: none;
+  padding: 7px 16px;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-submit:hover {
+  opacity: 0.9;
+}
+
+.btn-green {
+  background: green;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.btn-red {
+  background: #ff6b5c;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.btn-blue {
+  background: #4bb3c3;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+/* ===============================
+   BALANCE CARD
+================================ */
+.wallet-top-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.wallet-balance-card {
+  background: linear-gradient(to right, #b89b4a, #0a8a00);
+  color: #fff;
+  height: 130px;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.balance-symbol {
+  font-size: 36px;
+  font-weight: bold;
+}
+
+.balance-amount {
+  font-size: 40px;
+  font-weight: bold;
+}
+
+/* ===============================
+   TABLE
+================================ */
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.wallet-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.wallet-table th,
+.wallet-table td {
+  border: 1px solid #eee;
+  padding: 10px;
+  vertical-align: top;
+}
+
+.wallet-table th {
+  background: #fafafa;
+  font-weight: 600;
+}
+
+.wallet-table td {
+  background: #fff;
+}
+
+/* ===============================
+   FILE INPUT
+================================ */
+.wallet-file {
+  background: #f3c36b;
+  padding: 6px;
+  border-radius: 4px;
+  display: inline-block;
+  font-size: 13px;
+}
+
+/* ===============================
+   FORM GRID
+================================ */
+.wallet-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.wallet-grid-1 {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+/* ===============================
+   CHECKBOX
+================================ */
+.wallet-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+}
+
+/* ===============================
+   RESPONSIVE
+================================ */
+@media (max-width: 900px) {
+  .wallet-top-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .wallet-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
