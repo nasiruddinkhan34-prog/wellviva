@@ -14,6 +14,7 @@ import Checkout from "./cart/Checkout";
 import PaymentSuccess from "./payment/PaymentSuccess";
 import PaymentFailed from "./payment/PaymentFailed";
 import ProductDetail from "./website/ProductDetail";
+import BecomeAffiliate from "./website/Become-affiliate";
 
 /* MLM */
 import MlmLayout from "./mlm/MlmLayout";
@@ -57,6 +58,7 @@ export default function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/become-affiliate" element={<BecomeAffiliate />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/payment-success" element={<PaymentSuccess />} />
             <Route path="/payment-failed" element={<PaymentFailed />} />

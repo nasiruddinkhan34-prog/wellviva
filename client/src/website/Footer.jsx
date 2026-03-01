@@ -7,8 +7,9 @@ import {
   FaPhoneAlt,
   FaEnvelope,
 } from "react-icons/fa";
-
+import { useNavigate } from "react-router-dom";
 export default function Footer() {
+const navigate = useNavigate();
   return (
     <footer className="relative bg-[#f6f1e9] text-gray-700 mt-24">
       {/* Decorative texture */}
@@ -44,7 +45,7 @@ export default function Footer() {
               <li>About Us</li>
               <li>Products</li>
               <li>Shop</li>
-              <li>Become a Partner</li>
+              <li onClick={() => navigate("/become-affiliate")}>Become a Affiliate</li>
               <li>Business Plan</li>
               <li>Blog</li>
               <li>Contact Us</li>

@@ -1,5 +1,5 @@
 import db from "../config/db.js";
-
+import bcrypt from "bcrypt";
 /* ======================================================
    MLM DASHBOARD SUMMARY
    GET /api/mlm/dashboard
@@ -241,5 +241,93 @@ export const getGenealogy = async (req, res) => {
   } catch (error) {
     console.error("GENEALOGY ERROR:", error);
     res.status(500).json({ message: "Failed to load genealogy" });
+  }
+};
+
+
+export const registerMlmUser = async (req, res) => {
+  const {
+    sponsorId,
+    position,
+    firstName,
+    lastName,
+    email,
+    phone,
+    password
+  } = req.body;
+
+  if (!sponsorId || !position || !firstName || !email || !password) {
+    return res.status(400).json({ message: "All required fields must be filled" });
+  }
+
+  if (!["left", "right"].includes(position)) {
+    return res.status(400).json({ message: "Position must be left or right" });
+  }
+
+  try {
+    // 1️⃣ Check sponsor exists
+    const [sponsor] = await db.query(
+      "SELECT user_id FROM users WHERE user_id = ?",
+      [sponsorId]
+    );
+
+    if (sponsor.length === 0) {
+      return res.status(400).json({ message: "Invalid Sponsor ID" });
+    }
+
+    // 2️⃣ Check if position already occupied
+    const [existingPosition] = await db.query(
+      "SELECT user_id FROM users WHERE upline_id = ? AND position = ?",
+      [sponsorId, position]
+    );
+
+    if (existingPosition.length > 0) {
+      return res.status(400).json({
+        message: `Sponsor already has member on ${position} side`
+      });
+    }
+
+    // 3️⃣ Check duplicate email
+    const [emailCheck] = await db.query(
+      "SELECT user_id FROM users WHERE email = ?",
+      [email]
+    );
+
+    if (emailCheck.length > 0) {
+      return res.status(400).json({ message: "Email already registered" });
+    }
+
+    // 4️⃣ Hash password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // 5️⃣ Generate referral code
+    const referralCode = "REF" + Date.now();
+
+    // 6️⃣ Insert new MLM user
+    const [result] = await db.query(
+      `INSERT INTO users
+      (first_name, last_name, email, phone, password_hash,
+       role, upline_id, referral_code, user_rank, status, position)
+       VALUES (?, ?, ?, ?, ?, 'mlm_user', ?, ?, 'Starter', 'active', ?)`,
+      [
+        firstName,
+        lastName,
+        email,
+        phone,
+        hashedPassword,
+        sponsorId,
+        referralCode,
+        position
+      ]
+    );
+
+    res.status(201).json({
+      message: "MLM User Registered Successfully",
+      userId: result.insertId
+    });
+
+  } catch (error) {
+    console.error("Registration Error:", error);
+    res.status(500).json({ message: "Server Error" });
   }
 };

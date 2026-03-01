@@ -5,7 +5,8 @@ import {
   getIncomeReport,
   requestWithdrawal,
   getGenealogy,
-  myDirects
+  myDirects,
+  registerMlmUser
 } from "../controllers/mlmController.js";
 
 import { protect } from "../middleware/authMiddleware.js";
@@ -18,6 +19,7 @@ router.get("/income", protect, getIncomeReport);
 router.post("/withdraw", protect, requestWithdrawal);
 router.get("/genealogy", protect, getGenealogy);
 router.get("/genealogy/my-directs", protect, myDirects);
+router.post("/register", registerMlmUser);
 
 
 export default router;
